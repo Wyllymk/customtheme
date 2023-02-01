@@ -1,0 +1,2 @@
+# customtheme
+WordPress Custom Theme
