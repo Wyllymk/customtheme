@@ -15,7 +15,7 @@
             </div>
         <?php else:?>
             <div class="col-xs-12">
-                <?php the_content();?>
+                <?php echo "<p>No posts found!</p>"; ?>
             </div>
         <?php endif;?>
     </div>
