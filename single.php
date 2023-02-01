@@ -6,7 +6,7 @@
 get_header();  
 ?>
 
-<div id="content" class="site-content container py-5 mt-4">
+<div id="content" class="site-content container py-5 mt-4 bg-success">
   <div id="primary" class="content-area">
     //DISPLAY THE SELECTED POST ONLY
     <!-- Hook to add something nice -->
@@ -20,6 +20,7 @@ get_header();
             <?php the_post(); ?>
             <?php the_category(); ?>
             <h1><?php the_title(); ?></h1>
+            <h5><?php edit_post_link()?></h5>
             <p class="entry-meta">
               <small class="text-muted">
                 <?php
@@ -39,25 +40,23 @@ get_header();
             <div class="mb-4">
               <?php the_tags(); ?>
             </div>
-            <nav aria-label="page navigation">
-              <ul class="pagination justify-content-center">
-                <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                        <span class="sr-only">Previous</span>
-                    </a>
-                  <?php previous_post_link('%link'); ?>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="<?php next_post_link('%link'); ?>" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                        <span class="sr-only">Next</span>
-                    </a>
-                  
-                </li>
-              </ul>
-            </nav>
-            <?php comments_template(); ?>
+            <?php $args = array(
+                'prev_text' => sprintf( esc_html__( '%s Older', 'wpdocs_blankslate' ), '<span class="meta-nav"> < </span>' ),
+                'next_text' => sprintf( esc_html__( 'Newer %s', 'wpdocs_blankslate' ), '<span class="meta-nav"> > </span>' )
+            );
+            $navigation = get_the_post_navigation( $args );
+            if ( $navigation ) :
+                echo '<h4>View More</h4>';
+                echo $navigation;
+            endif;?>
+            <!-- // If comments are open or we have at least one comment, load up the comment template. -->
+            <?php 
+                if(comments_open() || get_comments_number()){
+                    comments_template(); 
+                }else{
+                    echo 'Comments are closed!';
+                }
+            ?>
           </footer>
 
         </main>

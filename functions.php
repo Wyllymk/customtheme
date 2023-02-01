@@ -34,11 +34,6 @@ function theme_setup(){
     /** post thumbnail **/
     add_theme_support( 'post-thumbnails' );
 
-    /** HTML5 support **/
-    add_theme_support( 'html5', array( 'comment-list', 'comment-form', 'search-form', 'gallery', 'caption' ) );
-
-    /** refresh widgest **/
-    add_theme_support( 'customize-selective-refresh-widgets' );
 
     /** custom background **/
     $bg_defaults = array(
@@ -80,22 +75,31 @@ function theme_setup(){
 add_action('after_setup_theme','theme_setup');
 
 /* Better way to add multiple widgets areas */
-function widget_registration($name, $id, $description,$beforeWidget, $afterWidget, $beforeTitle, $afterTitle){
+
+function custom_widgets_init() {
 	register_sidebar( array(
-		'name' => $name,
-		'id' => $id,
-		'description' => $description,
-		'before_widget' => $beforeWidget,
-		'after_widget' => $afterWidget,
-		'before_title' => $beforeTitle,
-		'after_title' => $afterTitle,
-	));
+		'name'          => 'Primary Sidebar',
+		'id'            => 'sidebar-1',
+		'before_widget' => '<aside id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</aside>',
+		'before_title'  => '<h3 class="widget-title">',
+		'after_title'   => '</h3>',
+	) );
+	register_sidebar( array(
+		'name'          => 'Secondary Sidebar',
+		'id'            => 'sidebar-2',
+		'before_widget' => '<ul><li id="%1$s" class="widget %2$s">',
+		'after_widget'  => '</li></ul>',
+		'before_title'  => '<h3 class="widget-title">',
+		'after_title'   => '</h3>',
+	) );
 }
+add_action('widgets_init','custom_widgets_init');
 
-function multiple_widget_init(){
-	widget_registration('Footer widget 1', 'footer-sidebar-1', 'test', '', '', '', '');
-	widget_registration('Footer widget 2', 'footer-sidebar-2', 'test', '', '', '', '');
-	// ETC...
+// Custom Nav Menu
+
+if ( !class_exists('My_Custom_Nav_Walker') ) {
+    class My_Custom_Nav_Walker extends Walker_Nav_Menu {
+        
+    }
 }
-
-add_action('widgets_init', 'multiple_widget_init');

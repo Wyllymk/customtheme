@@ -1,6 +1,9 @@
-html, body{
-    background-color: rgb(255, 255, 255);
-    color: rgb(0, 20, 37);
-    margin: 0;
-    padding: 0;
+
+
+a{
+    color: red;
+    text-transform: capitalize;
+}
+a:hover{
+    color: brown;
 }
