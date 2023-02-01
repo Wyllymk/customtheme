@@ -1,20 +1,8 @@
 <?php get_header();?>
 
 
-<?php
-    if(have_posts()):
-        while(have_posts()): the_post();?>
-            <?php the_title();?>
-            <small><?php the_time()?></small>
-            <?php the_content();?>
-            <?php the_category();?>
-            <?php the_tags(); ?>
-            <hr>
-            <?php
+<?php get_template_part( 'content' );?>
 
-        endwhile;
-    endif;
-
-?>
+<?php get_sidebar( );?>
 
 <?php get_footer();?>
